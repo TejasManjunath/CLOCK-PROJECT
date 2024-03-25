@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-epuiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>CLOCK MASTER</title>
+    
+    <style>
+        #container{
+            border:1px solid rgb(0, 124, 124);
+            border-radius :20px;
+            width:600px;
+            margin:20px auto;
+            padding:20px;
+            text-align:center;
+            background : #050A30;
+            
+          }
+          
+          #timer{ 
+            color:white; 
+            font-size:50px; 
+            font-weight: bold;
+            margin:10px auto;
+            align-items: center;
+            border : 5px solid cyan;
+            border-radius:50%;
+            width:40vh;
+            height:40vh;
+            overflow:hidden;
+            position:relative;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            cursor:default;
+            display:flex;
+            justify-content: center;
+          }
+          
+          #time{
+            margin-top:2.8rem;
+            z-index : 1;
+            position:relative;
+          }
+          
+          #filler{
+            background : #98ea70;
+            height: 0px;
+            width: 200px;
+            position:absolute;
+            bottom:0;
+          }
+          
+          
+        
+          *{
+            margin:0;
+            padding:0;
+        
+        }
+        
+        nav{
+            background-color: white ;
+            color:#050A30;
+            width:100%;
+            
+        }
+        nav ul{
+            width: 100%;
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            height: 15vh;
+        }
+        nav li{
+            height :50px;
+            font-size: 25px;
+        
+        }
+        nav a{
+            height:100%;
+            text-decoration: none;
+            padding:0 30px;
+            color: black;
+            display:flex;
+            align-items: center;
+        }
+        nav a:hover{
+            background-color: #dfdfdf;
+        }
+        
+        nav li:first-child{
+            margin-right: auto;
+            padding-left: 10px;
+            display:flex;
+        
+        }
+        nav li:last-child{
+            padding-right: 70px;
+        }
+        
+        .sidebar{
+            color:black;
+            position:fixed;
+            padding-left: 10vh;
+            padding-top: 50px;
+            height:100vh;
+            width: 500px;
+            z-index:999;
+            left:150px;
+            /*
+            background-color: rgba(255, 255, 255, 0.127);
+            backdrop-filter:blur(10px);
+            box-shadow:-10px 0 10px rgba(0,0,0,0.1);*/
+            display:none;
+            flex-direction:column;
+            align-items:flex-start;
+            justify-content:flex-start;
+        
+           
+            
+        }   
+        .sidebar img{
+          align-items: center;
+          display:inline
+          
+        }
+        
+        .sidebar li{
+            width:100%;
+            
+            
+            /*border-bottom:1px solid rgba(0,0,0,0.1);*/
+        }
+        
+        .sidebar h4{
+          align-items: center;
+          justify-content: center;
+          display:inline;
+          
+        }
+        .sidebar a{
+            width: 100%;
+            align-items: center;
+        }
+        .sidebar.active {
+            
+            display: block; /* Show sidebar when active */
+        }
+        .menu-button{
+            display:none;
+        }
+        
+        .dropdown {
+          float: left;
+          overflow: hidden;
+        }
+        
+        .dropdown .dropbtn {
+          font-size: 25px;  
+          border: none;
+          outline: none;
+          color: #050505;
+          align-items: center;
+          padding-top: 8px;
+          background-color: inherit;
+          font-family: inherit;
+          margin: 0;
+        }
+        
+        .navbar a:hover, .dropdown:hover .dropbtn {
+          background-color: white;
+        }
+        
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          min-width: 160px;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+        
+        .dropdown-content a {
+          float: none;
+          color: #002B5B;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: block;
+          text-align: left;
+        }
+        
+        .dropdown-content a:hover {
+          background-color: #ddd;
+        }
+        
+        .dropdown:hover .dropdown-content {
+          display: block;
+        
+        }
+        
+        
+        @media(max-width : 1100px){
+            .hideOnMobile{
+                display:none;
+            }
+            .menu-button{
+                display:block;
+        
+            }
+        }
+        /*
+        @media(min-width : 800px){
+            .sidebar{
+                width: 100%;
+            }
+                
+            
+        }*/
+        
+        
+        
+        
+        
+        *, *:before, *:after 
+        { box-sizing: border-box; }
+        
+        html { font-size: 18px; }
+        
+        body {
+          color: white;
+          font-size: 1.2em;
+          line-height: 1.6;
+          background: #050A30;
+          overflow-x: hidden;
+          font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        label .menu {
+          
+          position: absolute;
+          right: -50px;
+          top: -90px;
+          z-index: 100;
+          width: 150px;
+          height: 200px;
+          
+          border-radius: 50% 50% 50% 50%;
+          -webkit-transition: .5s ease-in-out;
+          transition: .5s ease-in-out;
+          box-shadow: 0 0 0 0 #FFF, 0 0 0 0 #FFF;
+          cursor: pointer;
+          
+        }
+        
+        label .hamburger {
+          position: absolute;
+          top: 135px;
+          left: 50px;
+          width: 30px;
+          height: 2px;
+          background: #69D2e7;
+          display: block;
+          -webkit-transform-origin: center;
+          transform-origin: center;
+          -webkit-transition: .5s ease-in-out;
+          transition: .5s ease-in-out;
+        }
+        
+        label .hamburger:after, label .hamburger:before {
+          -webkit-transition: .5s ease-in-out;
+          transition: .5s ease-in-out;
+          content: "";
+          position: absolute;
+          display: block;
+          width: 100%;
+          height: 100%;
+          background: #69d2e7;
+        }
+        
+        label .hamburger:before { top: -10px; }
+        
+        label .hamburger:after { bottom: -10px; }
+        
+        label input { display: none; }
+        
+        label input:checked + .menu {
+          box-shadow: 0 0 0 100vw #ffffff, 0 0 0 100vh #fffcfc;
+          border-radius: 0;
+          
+        }
+        
+        label input:checked + .menu .hamburger {
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+          
+        }
+        
+        label input:checked + .menu .hamburger:after {
+          -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+          bottom: 0;
+          
+        }
+        
+        label input:checked + .menu .hamburger:before {
+          -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+          top: 0;
+          
+        }
+        
+        label input:checked + .menu + ul { opacity: 1; }
+        
+        label ul {
+          z-index: 200;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          opacity: 0;
+          -webkit-transition: .25s 0s ease-in-out;
+          transition: .25s 0s ease-in-out;
+        }
+        
+        label a {
+          margin-bottom: 1em;
+          display: block;
+          color: #06080f;
+          text-decoration: none;
+          
+        }
+        
+        h1 {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          width: 80%;
+          text-align: center;
+        }
+        
+        label{
+        
+            font-size: 1rem;
+            font-weight: bold;
+            align-items: center;
+            margin: 0 auto;
+
+            justify-content: center;
+        }
+
+        
+        
+        
+          /*footer*/
+        footer {
+            text-align: center;
+            
+            padding: 10px 0;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            position: relative;
+            margin-top: 50px;
+        }
+        
+        footer p {
+            font-size: 12px;
+        }
+        
+        
+        
+        .footer {
+            position: relative;
+            width: 100%;
+            min-height: 100px;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        
+        .social-icon,
+        .menu {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px 0;
+            flex-wrap: wrap;
+        }
+        
+        .social-icon__item,
+        .menu__item {
+            list-style: none;
+        }
+        
+        .social-icon__link {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0 10px;
+            display: inline-block;
+            transition: 0.5s;
+        }
+        .social-icon__link:hover {
+            transform: translateY(-10px);
+        }
+        
+        .menu__link {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 0 10px;
+            display: inline-block;
+            transition: 0.5s;
+            text-decoration: none;
+            opacity: 0.75;
+            font-weight: 300;
+        }
+        
+        .menu__link:hover {
+            opacity: 1;
+        }
+        
+        .footer p {
+            color: #fff;
+            margin: 15px 0 10px 0;
+            font-size: 1rem;
+            font-weight: 300;
+        }
+        
+        /*tips*/
+        #tips-container-section {
+            /*
+            background-color: #020412;*/
+            padding: 30px;
+            border-radius: 10px;
+            
+            text-align: center;
+          }
+          
+          h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+          }
+          
+          p {
+            font-size: 18px;
+            margin: 0 0 20px;
+          }
+          
+          .tips-innercon {
+            list-style-type: none;
+            padding: 0;
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            width:75%;
+          }
+          
+          .tip {
+            text-align: left;
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 300px;
+          }
+          
+          .icon {
+            font-size: 36px;
+            background-color: #007bff;
+            color: #fff;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            
+          }
+          
+          .tip img{
+            width:55px;
+            height:auto;
+            position:relative;
+            
+          }
+          
+          .tip p {
+            font-size: 16px;
+            color: #444;
+          }
+          
+          .iconholder{
+            align-items:center;
+            justify-content: space-between;
+            display:flex;
+            width:50%;
+          }
+          
+          .icon2{
+            width:10px;
+            height:auto;
+            position:relative;
+            
+          }
+            
+          
+          
+          @media (max-width: 768px) {
+            .tips-innercon {
+              flex-direction: column;
+              align-items: center;
+            }
+          }
+        
+          @media(max-width:768px){
+            #container{
+              display:grid;
+              justify-content: center;
+              align-items: center;
+              width: 100%;
+              
+            }
+          }
+          hr{
+            width:80%;
+            border: 2px solid white;
+            margin : 0 auto;
+          }
+          .heading{
+            display:flex;
+            justify-content: center;
+            align-items: center;
+            color:white;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-top: 0;
+            width:100%;
+            padding-top: 10px;
+
+          }
+          input::-webkit-outer-spin-button,
+          input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+
+          /* Firefox */
+          input[type=number] {
+            -moz-appearance: textfield;
+          }
+          .input-number{
+            width: 100px;
+            height: 30px;
+            border-radius: 5px;
+            border: 1px solid #000;
+            text-align: center;
+            margin: 10px;
+          }
+          .input1{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 10px;
+            flex-direction: column;
+          }
+          ul{
+            list-style-type: none;
+          }
+          #lapBtn{
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+          }
+          #startPauseBtn{
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+          }
+          #resetBtn{
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+          }
+          #buttons button { 
+            background:#040073; 
+            border: none; 
+            color:#fff; 
+            cursor:pointer; 
+            padding:5px; 
+            border-radius: 50px;
+            margin:10px auto;
+            font-size:1.2rem;
+            height:50px;
+            width:90px;
+            border: 2px solid white;
+            display:inline;
+            align-items: center;
+            justify-content: center;
+          }
+          
+          #buttons button#startPauseBtn{
+            background : #0c0;
+            height : 90px;
+            width:90px; 
+            border-radius : 50%;
+          }
+          
+          #buttons button#lapBtn{
+            background : blue;
+          }
+          
+          #buttons button#resetBtn{
+            background : #f00;
+          }
+          #table-container{
+            display:flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            
+            
+          }
+          #lapTable {
+            
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+    
+        #lapTable th, #lapTable td {
+            
+            padding: 10px;
+            text-align: center;
+        }
+    
+        #lapTable th {
+            background-color: #050A30;
+            
+        }
+       /* #stopwatch {
+          font-size: 2em;
+          margin-bottom: 20px;
+          border: 2px solid #333;
+          border-radius: 50%;
+          width: 150px;
+          height: 150px;
+          line-height: 150px;
+          text-align: center;
+      }
+      */
+      #lap-times {
+          list-style-type: none;
+          padding: 0;
+      }
+  
+      #lap-times li {
+          margin-bottom: 5px;
+      }
+      #table-inner-container{
+         
+        overflow: auto;
+        border:2px solid rgb(0, 124, 124);
+         border-radius:15px;
+      }
+    </style>
+</head>
+<body>
+    
+    <header>
+        
+        
+        <nav>
+            <label>
+            <input type="checkbox" id="toggleSidebar" onclick=toggleSidebar()>
+            <span class="menu"> <span class="hamburger"></span> </span>
+            <ul class="sidebar">
+              
+              <div class="nav-sidebar"> <li><a href="./index.html"><h4>Home  </h4> </a> </li></div> 
+              <div class="nav-sidebar">  <li><a href="./index.html"><h4>CLOCK</h4></a></li></div>
+              <div class="nav-sidebar"> <li><a href="./WORLDCLOCK.html"><h4>WORLD CLOCK</h4></a></li></div>
+              
+              <div class="nav-sidebar">  <li><a href="#"><h4>WORKOUT TIMER</h4></a></li></div>
+              <div class="nav-sidebar">  <li><a href="./POMODOROTIMER.html"><h4>POMODORO TIMER</h4></a></li></div>                    
+              <div class="nav-sidebar">  <li><a href="#"><h4>About</h4></a></li></div>
+              <div class="nav-sidebar">  <li><a href="#"><h4>Contact</h4></a></li></div>
+              <div class="nav-sidebar">  <li><a href="#"><h4>Settings</h4></a></li></div>
+            </ul>
+            </label>
+            <ul>
+                <li><img src="./images/clock-main.png"> </li>
+                
+                <li class="hideOnMobile"><a href="./index.html">CLOCK</a></li>
+                <li class="hideOnMobile"><a href="./WORLDCLOCK.html">WORLD CLOCK</a></li>
+                <li class="hideOnMobile"><div class="dropdown">
+                  <button class="dropbtn"><a href="#"> WORKOUT 
+                    <i class="fa fa-caret-down"></i></a>
+                  </button>
+                  <div class="dropdown-content">
+                    <a href="#">Tabata Timer</a>
+                    <a href="#">AMRAP Timer</a>
+                    <a href="#">Stopwatch</a>
+                    <a href="#">EMOM Timer</a>
+                    <a href="#">Interval Timer</a>
+                  </div>
+                </div> 
+              </div></li>
+                <li class="hideOnMobile"><a href="./POMODOROTIMER.html">POMODORO TIMER</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+    <main>
+
+       <div class="heading"> <p class="heading">STOP WATCH</p></div>
+        
+        <div id="tabata-app">
+            <div id="container">
+              <div id="timer">
+                <div id="stopwatch">00:00:00</div>
+              </div>
+              <div id="buttons">
+                <button onclick="recordLap()" id="lapBtn">Lap</button>
+                <button onclick="startPause()" id="startPauseBtn">Start</button>
+                <button onclick="reset()" id="resetBtn">Reset</button>
+              </div>  
+              
+                
+                
+            </div>
+            <div id="table-container">
+              <div id="table-inner-container">
+                <table id="lapTable">
+                  <thead>
+                      <tr>
+                          <th>Lap</th>
+                          <th>Time</th>
+                          <th>Total Time</th>
+                      </tr>
+                  </thead>
+                  <tbody id="lap-times"></tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+          
+    </main>
+    <footer>
+      <footer class="footer">
+        
+    
+        <ul class="social-icon">
+        <li class="social-icon__item"><a class="social-icon__link" href="#" target="_blank">
+            <ion-icon name="logo-facebook"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://twitter.com/TEJASM74" target="_blank">
+            <ion-icon name="logo-twitter"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://www.linkedin.com/in/tejasm74" target="_blank">
+            <ion-icon name="logo-linkedin"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://www.instagram.com/_tejas_m7_/?igshid=dDB3MnQ3bjZtcGRl" target="_blank">
+            <ion-icon name="logo-instagram"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://github.com/TejasManjunath" target="_blank">
+            <ion-icon name="logo-github"></ion-icon>
+            </a></li> 
+        
+        </ul>
+        <ul class="menu">
+        <li class="menu__item"><a class="menu__link" href="./index.html">Home</a></li>
+        <li class="menu__item"><a class="menu__link" href="./about.html">About</a></li>
+        <li class="menu__item"><a class="menu__link" href="https://github.com/TejasManjunath">Portfolio</a></li>
+        <li class="menu__item"><a class="menu__link" href="#">Contact</a></li>
+  
+        </ul>
+        <p style="text-align: center;">&copy;2023 TEJASM74 | All Rights Reserved</p>
+    </footer>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </footer>
+    </footer>
+    
+    <script >
+        function showSidebar(){
+            const sidebar =document.querySelector('.sidebar');
+            sidebar.style.display='flex'
+        }
+        function hideSidebar(){
+            const sidebar =document.querySelector('.sidebar');
+            sidebar.style.display='none'
+        }
+        function toggleSidebar() {
+            var sidebar = document.querySelector('.sidebar');
+            setTimeout(function() {
+                sidebar.classList.toggle('active'); // Toggle the 'active' class on sidebar after 2 seconds
+            }, 300); // Delay of 2000 milliseconds (2 seconds)
+        }
+        
+        
+        
+        
+        let filter_btn = document.querySelectorAll('.filter-btn');
+        let tab_items = document.querySelectorAll('.tab-item');
+        let tabContainer = document.querySelector('.tab-filter-item-container');
+        
+        function setActiveTab(select_tab) {
+          for (let t = 0; t < tab_items.length; t++) {
+            tabContainer.style.height = tab_items[t].scrollHeight + 'px';
+            if (tab_items[t].classList.contains(select_tab)) {
+              tab_items[t].classList.add('select_tab');
+            } else {
+              tab_items[t].classList.remove('select_tab');
+            }
+          }
+        }
+        
+        for (let i = 0; i < filter_btn.length; i++) {
+          filter_btn[i].addEventListener('click', function () {
+            for (let j = 0; j < filter_btn.length; j++) {
+              filter_btn[j].classList.remove('active');
+            }
+            let select_tab = filter_btn[i].getAttribute('data-tab');
+            filter_btn[i].classList.add('active');
+            setActiveTab(select_tab);
+          });
+        }
+        
+        for (let th = 0; th < tab_items.length; th++) {
+          tabContainer.style.height = tab_items[th].scrollHeight + 'px';
+        }
+        
+        
+        /* Pomodoro Timer */
+        
+
+
+        // stop watch
+
+        let timer;
+        let running = false;
+        let lapStartTime;
+        let totalStartTime;
+        let lapTimes = [];
+    
+        function startPause() {
+            const button = document.getElementById("startPauseBtn");
+            if (!running) {
+                button.textContent = "Pause";
+                totalStartTime = Date.now() - (lapTimes.length > 0 ? lapTimes.reduce((acc, curr) => acc + curr.lapTime, 0) : 0);
+                lapStartTime = Date.now() - (lapTimes.length > 0 ? lapTimes.reduce((acc, curr) => acc + curr.lapTime, 0) : 0);
+                timer = setInterval(updateStopwatch, 10);
+            } else {
+                button.textContent = "Start";
+                clearInterval(timer);
+            }
+            running = !running;
+        }
+    
+        function updateStopwatch() {
+            const elapsedTime = Date.now() - totalStartTime;
+            const formattedTime = formatTime(elapsedTime);
+            document.getElementById("stopwatch").textContent = formattedTime;
+        }
+    
+        function reset() {
+            clearInterval(timer);
+            document.getElementById("stopwatch").textContent = "00:00:00";
+            document.getElementById("startPauseBtn").textContent = "Start";
+            running = false;
+            lapTimes = [];
+            document.getElementById("lap-times").innerHTML = "";
+        }
+    
+        function formatTime(milliseconds) {
+            const totalSeconds = Math.floor(milliseconds / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            const millisecondsFormatted = String(milliseconds % 1000).padStart(3, "0");
+            return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}:${millisecondsFormatted.slice(0, -1)}`;
+        }
+    
+        function recordLap() {
+            if (running) {
+                const lapEndTime = Date.now();
+                const lapTime = lapEndTime - lapStartTime;
+                const totalTime = lapEndTime - totalStartTime;
+                lapTimes.push({ lapTime, totalTime });
+                const lapList = document.getElementById("lap-times");
+                const lapItem = document.createElement("tr");
+                lapItem.innerHTML = `<td>${lapTimes.length}</td><td>${formatTime(lapTime)}</td><td>${formatTime(totalTime)}</td>`;
+                lapList.appendChild(lapItem);
+                lapStartTime = lapEndTime;
+            }
+        }
+    </script>
+</body>
+</html>
+
+

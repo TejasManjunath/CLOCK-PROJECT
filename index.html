@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-epuiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>CLOCK MASTER</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    
+    <header>
+        
+        
+        <nav>
+            <label>
+            <input type="checkbox" id="toggleSidebar" onclick=toggleSidebar()>
+            <span class="menu"> <span class="hamburger"></span> </span>
+            <ul class="sidebar">
+              
+                <div class="nav-sidebar"> <li><a href="./index.html"><h4>Home  </h4> </a> </li></div> 
+                <div class="nav-sidebar">  <li><a href="./index.html"><h4>CLOCK</h4></a></li></div>
+                <div class="nav-sidebar"> <li><a href="./WORLDCLOCK.html"><h4>WORLD CLOCK</h4></a></li></div>
+                
+                <div class="nav-sidebar">  <li><a href="#"><h4>WORKOUT TIMER</h4></a></li></div>
+                <div class="nav-sidebar">  <li><a href="./POMODOROTIMER.html"><h4>POMODORO TIMER</h4></a></li></div>                    
+                <div class="nav-sidebar">  <li><a href="#"><h4>About</h4></a></li></div>
+                <div class="nav-sidebar">  <li><a href="#"><h4>Contact</h4></a></li></div>
+                <div class="nav-sidebar">  <li><a href="#"><h4>Settings</h4></a></li></div>
+            </ul>
+            </label>
+            <ul>
+                <li><h2> <a href="./index.html"><img src="./images/clock-main.png"> </a></h2> </li>
+                
+                <li class="hideOnMobile"><a href="./index.html">CLOCK</a></li>
+                <li class="hideOnMobile"><a href="./WORLDCLOCK.html">WORLD CLOCK</a></li>
+                <li class="hideOnMobile"><div class="dropdown">
+                  <button class="dropbtn"><a href="#"> WORKOUT 
+                    <i class="fa fa-caret-down"></i></a>
+                  </button>
+                  <div class="dropdown-content">
+                    <a href="./TABATA_TIMER.html">Tabata Timer</a>
+                    <a href="#">AMRAP Timer</a>
+                    <a href="./Stopwatch.html">Stopwatch</a>
+                    <a href="#">EMOM Timer</a>
+                    <a href="#">Interval Timer</a>
+                  </div>
+                </div> 
+              </div></li>
+                <li class="hideOnMobile"><a href="./POMODOROTIMER.html">POMODORO TIMER</a></li>
+                
+            </ul>
+        </nav>
+    </header>
+    <main>
+        
+      <div class="container">
+        <div class="tab-container">
+          <div class="tab-filter-container" >
+            <li class="filter-btn active" data-tab="custompswd">
+              <img src="./images/digitalclk2.png" id="digitalid" size="100px">
+                  Digital Clock
+            </li>
+            <li class="filter-btn" data-tab="memopswd">
+              <img src="./images/analogueclk2.png" id="analogueid">
+              Analogue Clock
+            </li>
+            
+            
+          </div>
+  
+  
+          <div class="tab-filter-item-container" style="height:500px;">
+            <div class="tab-item custompswd select_tab">
+              <div class="tab-content-right">
+                
+  
+                <div class="options">
+                  
+                  <div id="clock-container" class="clock-container">
+                    <div class="fullscreen" id="fullscreen">
+                      <div id="time"></div>
+                      <div id="date"></div>
+                    </div>
+                  </div>
+                  <div id="fullscreenbtn">
+                    <button id="fullscreenBtn"><svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M120-120v-200h80v120h120v80H120Zm520 0v-80h120v-120h80v200H640ZM120-640v-200h200v80H200v120h-80Zm640 0v-120H640v-80h200v200h-80Z"/></svg></button>
+                  </div>
+                  <div id="customize">
+                    <label for="formatBtn">hour format:</label>
+                    <button id="formatBtn" style="width: 50px;">12 Hr</button> <br>
+
+                    <label for="bgImage">Background Image:</label>
+                    <input type="file" id="bgImage" accept="image/*">
+                    <br>
+                  
+                    
+                  </div> 
+              </div>
+              
+                
+                
+              </div>
+            </div>
+  
+  
+            <div class="tab-item memopswd">
+              <div class="tab-content-right">
+                <div class="options">
+                
+                  <body>
+                    <div class="clock">
+                      <div class="wrap">
+                        <span class="hour"></span>
+                        <span class="minute"></span>
+                        <span class="second"></span>
+                        <span class="dot"></span>
+                      </div>
+                    </div>
+                </body>
+
+                  </div>
+
+                </div> 
+              </div>
+            
+            </div>
+  
+  
+          </div>
+        </div>
+      </div>
+
+
+
+    </main>
+    <footer>
+      <footer class="footer">
+        
+    
+        <ul class="social-icon">
+        <li class="social-icon__item"><a class="social-icon__link" href="#" target="_blank">
+            <ion-icon name="logo-facebook"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://twitter.com/TEJASM74" target="_blank">
+            <ion-icon name="logo-twitter"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://www.linkedin.com/in/tejasm74" target="_blank">
+            <ion-icon name="logo-linkedin"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://www.instagram.com/_tejas_m7_/?igshid=dDB3MnQ3bjZtcGRl" target="_blank">
+            <ion-icon name="logo-instagram"></ion-icon>
+            </a></li>
+        <li class="social-icon__item"><a class="social-icon__link" href="https://github.com/TejasManjunath" target="_blank">
+            <ion-icon name="logo-github"></ion-icon>
+            </a></li> 
+        
+        </ul>
+        <ul class="menu">
+        <li class="menu__item"><a class="menu__link" href="./index.html">Home</a></li>
+        <li class="menu__item"><a class="menu__link" href="./about.html">About</a></li>
+        <li class="menu__item"><a class="menu__link" href="https://github.com/TejasManjunath">Portfolio</a></li>
+        <li class="menu__item"><a class="menu__link" href="#">Contact</a></li>
+  
+        </ul>
+        <p style="text-align: center;">&copy;2023 TEJASM74 | All Rights Reserved</p>
+    </footer>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    </footer>
+    </footer>
+    <script src="main.js"></script>
+</body>
+</html>
+
+
+
+
+
